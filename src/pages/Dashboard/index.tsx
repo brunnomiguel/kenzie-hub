@@ -7,12 +7,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { FaPlus } from "react-icons/fa";
-import { ModalToAddTech } from "../../components/Modal/ModalToAddTech";
-import { NavBar } from "../../components/NavBar";
-import { useTechs } from "../../contexts/Techs";
-import { theme } from "../../styles/theme";
 import { TechCard } from "./TechCard";
+import { FaPlus } from "react-icons/fa";
+import { theme } from "../../styles/theme";
+import { useTechs } from "../../contexts/Techs";
+import { NavBar } from "../../components/NavBar";
+import { ModalAddTech } from "../../components/Modal/ModalAddTech";
 
 export const Dashboard = () => {
   const { techs, loadTechs } = useTechs();
@@ -112,7 +112,7 @@ export const Dashboard = () => {
           )}
         </Grid>
       </Grid>
-      <ModalToAddTech isOpen={isOpen} onClose={onClose} />
+      <ModalAddTech isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
