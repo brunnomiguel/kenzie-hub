@@ -9,6 +9,7 @@ import {
   ModalOverlay,
   Select,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { Input } from "../Input";
@@ -20,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useTechs } from "../../contexts/Techs";
 import { MdArrowDropDown } from "react-icons/md";
+import { ModalRemoveTech } from "./ModalRemoveTech";
 
 interface Itech {
   id: string;
@@ -49,6 +51,12 @@ export const ModalEditTech = ({
 
   const { editTech } = useTechs();
 
+  const {
+    isOpen: isOpenRemoveTech,
+    onOpen: onOpenRemoveTech,
+    onClose: onCloseRemoveTech,
+  } = useDisclosure();
+
   const onSubmitFunction = (data: Omit<Itech, "id">) => {
     const newData = {
       oldStatus: techData.status,
@@ -60,116 +68,128 @@ export const ModalEditTech = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent
-        w="100%"
-        maxW="450px"
-        h="350px"
-        borderRadius="4px"
-        bg={theme.colors.gray[300]}
-      >
-        <ModalHeader
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent
           w="100%"
-          h="50px"
-          display="flex"
-          alignItems="center"
-          borderRadius="4px 4px 0 0"
-          bg={theme.colors.gray[200]}
-          justifyContent="space-between"
+          h="350px"
+          maxW="450px"
+          borderRadius="4px"
+          bg={theme.colors.gray[300]}
         >
-          <Text fontSize="1rem" fontWeight="600" color={theme.colors.gray[50]}>
-            Tecnologia Detalhes
-          </Text>
-          <Center
-            as="button"
-            fontWeight="600"
-            fontSize="1.5rem"
-            onClick={() => onClose()}
-            color={theme.colors.gray[100]}
-          >
-            X
-          </Center>
-        </ModalHeader>
-        <ModalBody mt="4" as="form" onSubmit={handleSubmit(onSubmitFunction)}>
-          <Input
-            label="Nome"
-            {...register("title")}
-            defaultValue={techData.title}
-            placeholder="Nome da Tecnologia"
-          />
-          <Text
-            pt="4"
-            pb="2"
-            w="100%"
-            textAlign="left"
-            color={
-              errors.status ? theme.colors.red[900] : theme.colors.gray[50]
-            }
-          >
-            Selecionar status
-          </Text>
-          <Select
+          <ModalHeader
             w="100%"
             h="50px"
-            size="lg"
-            variant="outline"
-            borderWidth="0.125rem"
-            borderRadius="0.25rem"
-            {...register("status")}
-            icon={<MdArrowDropDown />}
+            display="flex"
+            alignItems="center"
+            borderRadius="4px 4px 0 0"
             bg={theme.colors.gray[200]}
-            color={theme.colors.gray[50]}
-            borderColor={!!errors.status && theme.colors.red[900]}
+            justifyContent="space-between"
           >
-            <option
-              value="Iniciante"
-              style={{ background: theme.colors.gray[200] }}
+            <Text
+              fontSize="1rem"
+              fontWeight="600"
+              color={theme.colors.gray[50]}
             >
-              Iniciante
-            </option>
-            <option
-              value="Intermediário"
-              style={{ background: theme.colors.gray[200] }}
+              Tecnologia Detalhes
+            </Text>
+            <Center
+              as="button"
+              fontWeight="600"
+              fontSize="1.5rem"
+              onClick={() => onClose()}
+              color={theme.colors.gray[100]}
             >
-              Intermediário
-            </option>
-            <option
-              value="Avançado"
-              style={{ background: theme.colors.gray[200] }}
+              X
+            </Center>
+          </ModalHeader>
+          <ModalBody mt="4" as="form" onSubmit={handleSubmit(onSubmitFunction)}>
+            <Input
+              label="Nome"
+              {...register("title")}
+              defaultValue={techData.title}
+              placeholder="Nome da Tecnologia"
+            />
+            <Text
+              pt="4"
+              pb="2"
+              w="100%"
+              textAlign="left"
+              color={
+                errors.status ? theme.colors.red[900] : theme.colors.gray[50]
+              }
             >
-              Avançado
-            </option>
-          </Select>
-          <Flex gap="4" alignItems="center">
-            <Button
-              w="70%"
-              h="45px"
-              color="white"
-              type="submit"
-              m="2rem 0 0 0"
-              transition="0.5s"
-              borderRadius="0.5rem"
-              _hover={{ opacity: 0.7 }}
-              bg={theme.colors.red[500]}
+              Selecionar status
+            </Text>
+            <Select
+              w="100%"
+              h="50px"
+              size="lg"
+              variant="outline"
+              borderWidth="0.125rem"
+              borderRadius="0.25rem"
+              {...register("status")}
+              icon={<MdArrowDropDown />}
+              bg={theme.colors.gray[200]}
+              color={theme.colors.gray[50]}
+              borderColor={!!errors.status && theme.colors.red[900]}
             >
-              Salvar Alterações
-            </Button>
-            <Button
-              w="30%"
-              h="45px"
-              color="white"
-              m="2rem 0 0 0"
-              transition="0.5s"
-              borderRadius="0.5rem"
-              bg={theme.colors.gray[100]}
-              _hover={{ bg: theme.colors.red[500] }}
-            >
-              Exluir
-            </Button>
-          </Flex>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+              <option
+                value="Iniciante"
+                style={{ background: theme.colors.gray[200] }}
+              >
+                Iniciante
+              </option>
+              <option
+                value="Intermediário"
+                style={{ background: theme.colors.gray[200] }}
+              >
+                Intermediário
+              </option>
+              <option
+                value="Avançado"
+                style={{ background: theme.colors.gray[200] }}
+              >
+                Avançado
+              </option>
+            </Select>
+            <Flex gap="4" alignItems="center">
+              <Button
+                w="70%"
+                h="45px"
+                color="white"
+                type="submit"
+                m="2rem 0 0 0"
+                transition="0.5s"
+                borderRadius="0.5rem"
+                _hover={{ opacity: 0.7 }}
+                bg={theme.colors.red[500]}
+              >
+                Salvar Alterações
+              </Button>
+              <Button
+                w="30%"
+                h="45px"
+                color="white"
+                m="2rem 0 0 0"
+                transition="0.5s"
+                borderRadius="0.5rem"
+                bg={theme.colors.gray[100]}
+                onClick={() => onOpenRemoveTech()}
+                _hover={{ bg: theme.colors.red[500] }}
+              >
+                Exluir
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <ModalRemoveTech
+        isOpen={isOpenRemoveTech}
+        onClose={onCloseRemoveTech}
+        techId={techData.id}
+      />
+    </>
   );
 };

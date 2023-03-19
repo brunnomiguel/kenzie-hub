@@ -44,8 +44,8 @@ export const Dashboard = () => {
         >
           <Text
             mt="1rem"
-            fontSize="1.25rem"
             fontWeight="600"
+            fontSize="1.25rem"
             color={theme.colors.gray[50]}
           >
             Tecnologias
@@ -72,8 +72,17 @@ export const Dashboard = () => {
           maxW="780px"
           display="flex"
           flexDir="column"
+          overflowY="scroll"
           borderRadius="4px"
           bg={theme.colors.gray[300]}
+          css={{
+            "&::-webkit-scrollbar": { width: "4px" },
+            "&::-webkit-scrollbar-track": { width: "6px" },
+            "&::-webkit-scrollbar-thumb": {
+              background: `${theme.colors.red[500]}`,
+              borderRadius: "24px",
+            },
+          }}
         >
           {techs.length < 1 ? (
             <Grid

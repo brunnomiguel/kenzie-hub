@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react";
-import { NavBar } from "../../components/NavBar";
-import { theme } from "../../styles/theme";
 import { SignUpForm } from "./SignUpForm";
+import { theme } from "../../styles/theme";
+import { NavBar } from "../../components/NavBar";
 
 export const Register = () => {
   return (
