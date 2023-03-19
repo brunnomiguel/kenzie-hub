@@ -1,10 +1,10 @@
 import * as yup from "yup";
 
+const validateCharacter = /^.{8,}$/;
+const validateNumbers = /(?=.*[0-9])/;
 const validateUpperCase = /^(?=.*[A-Z])/;
 const validateLowerCase = /^(?=.*[a-z])/;
-const validateNumbers = /(?=.*[0-9])/;
 const validateSpecialCharacter = /^(?=.*[!#@$%&*.])/;
-const validateCharacter = /^.{8,}$/;
 
 export const signInSchema = yup.object().shape({
   email: yup

@@ -13,13 +13,13 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/Auth";
 
 interface IsignUpCredentials {
+  bio: string;
   name: string;
   email: string;
-  password: string;
-  confirm_password: string;
-  bio: string;
   contact: string;
+  password: string;
   course_module: string;
+  confirm_password: string;
 }
 
 export const SignUpForm = () => {

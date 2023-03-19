@@ -1,6 +1,6 @@
+import { theme } from "../../styles/theme";
 import { Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { ModalEditTech } from "../../components/Modal/ModalEditTech";
-import { theme } from "../../styles/theme";
 
 interface Itech {
   id: string;

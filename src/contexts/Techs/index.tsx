@@ -1,7 +1,7 @@
+import { useAuth } from "../Auth";
+import { api } from "../../services";
 import { useToast } from "@chakra-ui/react";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { api } from "../../services";
-import { useAuth } from "../Auth";
 
 interface ItechProvider {
   children: ReactNode;
@@ -12,7 +12,7 @@ interface ItechContextData {
   loadTechs: () => Promise<void>;
   addNewTech: (data: Omit<Itech, "id">) => Promise<void>;
   editTech: (data: IeditTech) => Promise<void>;
-  removeTech: (techId: number) => Promise<void>;
+  removeTech: (techId: string) => Promise<void>;
 }
 
 interface Itech {
@@ -135,7 +135,7 @@ export const TechsProvider = ({ children }: ItechProvider) => {
     }
   };
 
-  const removeTech = async (techId: number) => {
+  const removeTech = async (techId: string) => {
     await api
       .delete(`/users/techs/${techId}`, {
         headers: {

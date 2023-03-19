@@ -52,8 +52,8 @@ export const ModalAddTech = ({ isOpen, onClose }: ImodalAddTechProps) => {
       <ModalOverlay />
       <ModalContent
         w="100%"
-        maxW="450px"
         h="350px"
+        maxW="450px"
         borderRadius="4px"
         bg={theme.colors.gray[300]}
       >

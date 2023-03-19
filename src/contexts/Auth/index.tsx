@@ -1,7 +1,7 @@
-import { useToast } from "@chakra-ui/react";
-import { createContext, useContext, useState, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
 import { api } from "../../services";
+import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface IauthProvider {
   children: ReactNode;
@@ -28,13 +28,13 @@ interface IsignInCredentials {
 }
 
 interface IsignUpCredentials {
+  bio: string;
   name: string;
   email: string;
-  password: string;
-  confirm_password: string;
-  bio: string;
   contact: string;
+  password: string;
   course_module: string;
+  confirm_password: string;
 }
 
 interface IauthContextData {
