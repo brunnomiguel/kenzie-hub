@@ -1,6 +1,7 @@
 import {
   Button,
   Center,
+  Flex,
   Modal,
   ModalBody,
   ModalContent,
@@ -9,38 +10,52 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import { theme } from "../../styles/theme";
+
 import { Input } from "../Input";
+import { theme } from "../../styles/theme";
+
 import { useForm } from "react-hook-form";
 import { techSchema } from "../../schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MdArrowDropDown } from "react-icons/md";
+
 import { useTechs } from "../../contexts/Techs";
+import { MdArrowDropDown } from "react-icons/md";
 
-interface ImodalAddTechProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-interface ItechData {
+interface Itech {
+  id: string;
   title: string;
   status: string;
 }
 
-export const ModalToAddTech = ({ isOpen, onClose }: ImodalAddTechProps) => {
+interface ImodalEditTechProps {
+  isOpen: boolean;
+  onClose: () => void;
+  techData: Itech;
+}
+
+export const ModalEditTech = ({
+  isOpen,
+  onClose,
+  techData,
+}: ImodalEditTechProps) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ItechData>({
+  } = useForm<Omit<Itech, "id">>({
     resolver: yupResolver(techSchema),
   });
 
-  const { addNewTech } = useTechs();
+  const { editTech } = useTechs();
 
-  const onSubmitFunction = (techData: ItechData) => {
-    addNewTech(techData);
+  const onSubmitFunction = (data: Omit<Itech, "id">) => {
+    const newData = {
+      oldStatus: techData.status,
+      status: data.status,
+      tech: techData,
+    };
+    editTech(newData);
     reset();
   };
 
@@ -64,7 +79,7 @@ export const ModalToAddTech = ({ isOpen, onClose }: ImodalAddTechProps) => {
           justifyContent="space-between"
         >
           <Text fontSize="1rem" fontWeight="600" color={theme.colors.gray[50]}>
-            Cadastrar Tecnologia
+            Tecnologia Detalhes
           </Text>
           <Center
             as="button"
@@ -80,6 +95,7 @@ export const ModalToAddTech = ({ isOpen, onClose }: ImodalAddTechProps) => {
           <Input
             label="Nome"
             {...register("title")}
+            defaultValue={techData.title}
             placeholder="Nome da Tecnologia"
           />
           <Text
@@ -100,10 +116,10 @@ export const ModalToAddTech = ({ isOpen, onClose }: ImodalAddTechProps) => {
             variant="outline"
             borderWidth="0.125rem"
             borderRadius="0.25rem"
+            {...register("status")}
             icon={<MdArrowDropDown />}
             bg={theme.colors.gray[200]}
             color={theme.colors.gray[50]}
-            {...register("status")}
             borderColor={!!errors.status && theme.colors.red[900]}
           >
             <option
@@ -125,19 +141,33 @@ export const ModalToAddTech = ({ isOpen, onClose }: ImodalAddTechProps) => {
               Avançado
             </option>
           </Select>
-          <Button
-            h="45px"
-            w="100%"
-            color="white"
-            type="submit"
-            m="2rem 0 0 0"
-            transition="0.5s"
-            borderRadius="0.5rem"
-            _hover={{ opacity: 0.7 }}
-            bg={theme.colors.red[500]}
-          >
-            Cadastrar Tecnologia
-          </Button>
+          <Flex gap="4" alignItems="center">
+            <Button
+              w="70%"
+              h="45px"
+              color="white"
+              type="submit"
+              m="2rem 0 0 0"
+              transition="0.5s"
+              borderRadius="0.5rem"
+              _hover={{ opacity: 0.7 }}
+              bg={theme.colors.red[500]}
+            >
+              Salvar Alterações
+            </Button>
+            <Button
+              w="30%"
+              h="45px"
+              color="white"
+              m="2rem 0 0 0"
+              transition="0.5s"
+              borderRadius="0.5rem"
+              bg={theme.colors.gray[100]}
+              _hover={{ bg: theme.colors.red[500] }}
+            >
+              Exluir
+            </Button>
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>
