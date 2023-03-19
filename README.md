@@ -1,7 +1,7 @@
 # Kenzie Hub
 
 > Hub de portfólios de programadores da Kenzie.
-> Live demo [_here_](https://developer-habits-manager.vercel.app/).
+> Live demo [_here_](https://kenzie-hub-sage.vercel.app/).
 
 ## Tabela de conteúdos
 
